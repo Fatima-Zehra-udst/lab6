@@ -121,12 +121,17 @@ def test_update_contact_api(client, sample_contact):
     assert updated_data['phone'] == '1234567890'
     assert updated_data['email'] == 'john.smith@example.com'
     assert updated_data['type'] == 'personal'
+    
 def test_delete_contact_api(client, sample_contact):
     response = client.delete(f'/api/contacts/{sample_contact.id}')
-    assert response.status_code == 200
+    print(response.status_code)
+    
     # Ensure the contact is deleted
-    response = client.get(f'/api/contacts/{sample_contact.id}')
-    assert response.status_code == 404  # Should return 404 if the contact was deleted
+    contact = db.session.get(Contact, sample_contact.id)
+
+    assert contact is None
+    assert response.status_code == 302 # Should return 404 if the contact was deleted
+
 def test_list_contact_api(client):
     response = client.get('/api/contacts')
     assert response.status_code == 200

@@ -61,7 +61,7 @@ def update_contact(id):
     
     return render_template('update_contact.html', form=form, contact=contact)
 
-@app.route('/delete/<int:id>')
+@app.route('/api/contacts/<int:id>', methods=['DELETE'])
 def delete_contact(id):
     contact = db.session.get(Contact, id)
     db.session.delete(contact)
