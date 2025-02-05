@@ -45,6 +45,8 @@ def add_contact():
             flash('Error adding contact. Phone number might be duplicate.', 'error')
     return render_template('add_contact.html', form=form)
 
+
+
 @app.route('/update/<int:id>', methods=['GET', 'POST'])
 def update_contact(id):
     contact = db.session.get(Contact, id)
